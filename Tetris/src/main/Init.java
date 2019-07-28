@@ -3,6 +3,7 @@ package main;
 public class Init {
 	public static void main(String args[]) {
 		System.out.println("Game of Tetris Starting...");
-		System.out.println("Testing Push");
+		Tetris game = new Tetris(30, 30);
+		game.run();
 	}
 }
