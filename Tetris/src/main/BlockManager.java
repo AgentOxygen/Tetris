@@ -42,7 +42,7 @@ public class BlockManager {
 	
 	/**Called during each update cycle.*/
 	public void update() {
-		//Randomly selects cells to fill, just a proof of concept
+		//Randomly selects cells to fill every 1 second, just a proof of concept
 				if(Tetris.game_time - time_switch > 1) {
 					this.clearGrid();
 					Random r = new Random();
