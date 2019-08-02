@@ -14,22 +14,27 @@ public class BlockManager {
 		grid = new int[width][height];
 	}
 	
+	/**Returns width of grid.*/
 	public int getWidth() {
 		return grid.length;
 	}
 	
+	/**Returns height of grid*/
 	public int getHeight() {
 		return grid[0].length;
 	}
 	
+	/**Returns grid*/
 	public int[][] getGrid() {
 		return grid;
 	}
 	
+	/**Sets value of specified cell within grid*/
 	public void setGrid(int x, int y, int value) {
 		grid[x][y] = value;
 	}
 	
+	/**Sets value of every cell within the grid equal to '0'*/
 	public void clearGrid() {
 		for(int i = 0; i < grid.length; i++) {
 			for(int z = 0; z < grid[i].length; z++) {
@@ -40,7 +45,7 @@ public class BlockManager {
 	
 	private double time_switch = -1;
 	
-	/**Called during each update cycle.*/
+	/**Should be called during each update cycle. Updates block manager's grid.*/
 	public void update() {
 		//Randomly selects cells to fill every 1 second, just a proof of concept
 				if(Tetris.game_time - time_switch > 1) {

@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFrame;
 
@@ -11,7 +12,10 @@ import javax.swing.JFrame;
  * */
 public class Visuals extends JFrame implements Runnable{
 	private static final long serialVersionUID = 312566061411303349L;
-	public boolean update = true;
+	
+	/**Regulates visuals loop*/
+	private final AtomicBoolean update = new AtomicBoolean(false);
+	
 	private double rate;
 	/**Array used for checking position of blocks.*/
 	public int[][] graph;
@@ -24,6 +28,7 @@ public class Visuals extends JFrame implements Runnable{
 		graph_width = grid_width;
 		graph_height = grid_height;
 		graph = new int[grid_width][grid_height];
+		update.set(true);
 		this.setSize(new Dimension(300, 600));
 		this.setTitle("Tetris");
 		this.setResizable(false);
@@ -65,7 +70,7 @@ public class Visuals extends JFrame implements Runnable{
 		long standard_delay = Math.round(delay1);
 		long delta = System.currentTimeMillis();
 		
-		while(update) {
+		while(update.get()) {
 			update();
 			delta = System.currentTimeMillis() - delta;
 			if(delta < 0) {
@@ -83,6 +88,10 @@ public class Visuals extends JFrame implements Runnable{
 		}
 	}
 	
+	/**Stops thread from updating; breaks update loop.*/
+	public void stopThread() {
+		update.set(false);
+	}
 	
 	@Override
 	public void run() {

@@ -1,22 +1,31 @@
 package main;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Tetris implements Runnable{
 	
 	/**Creates BlockManager to be read for updating the visuals and game*/
 	public BlockManager bm;
 	/**Regulates game loop*/
-	public boolean update = true;
+	private final AtomicBoolean update = new AtomicBoolean(false);
 	/**Sets rate, in updates per second, of update loop*/
 	public double rate = 30;
 	/**Creates visuals for game.*/
 	public Visuals vis;
 	/*Used for timing in seconds**/
 	public static double game_time = 0.0;
+	
+	/**Creates thread for graphics processing.*/
+	public Thread visuals;
+	/**Creates thread for game core.*/
+	public Thread game;
+	
 	/**Creates game instance with grid size set by provided width and height variables. Use .run() to start update loop.*/
 	public Tetris(int width, int height) {
+		update.set(true);
 		bm = new BlockManager(width, height);
 		vis = new Visuals(30.0, width, height);
-		Thread game = new Thread(this);
+		game = new Thread(this);
 		game.start();
 	}
 	
@@ -35,7 +44,7 @@ public class Tetris implements Runnable{
 		long standard_delay = Math.round(delay1);
 		long delta = System.currentTimeMillis();
 		
-		while(update) {
+		while(update.get()) {
 			update();
 			delta = System.currentTimeMillis() - delta;
 			game_time = game_time + ((delay1 - delta)/1000.0);
@@ -52,11 +61,19 @@ public class Tetris implements Runnable{
 			}
 			delta = System.currentTimeMillis();
 		}
+		
+		vis.stopThread();
+		this.stopThread();
 	}
 
+	/**Stops thread from updating; breaks update loop.*/
+	public void stopThread() {
+		update.set(false);
+	}
+	
 	@Override
 	public void run() {
-		Thread visuals = new Thread(vis);
+		visuals = new Thread(vis);
 		visuals.start();
 		loop();
 	}
