@@ -32,7 +32,7 @@ public class Visuals extends JFrame implements Runnable{
 		this.setVisible(true);
 	}
 	
-	/**Draws designs, outlines, and things that don't move or change.*/
+	/**Draws designs, outlines, and things that don't move within visuals thread.*/
 	private void drawStatics(Graphics g) {
 		int scale_graph = this.getWidth()/(graph_width + 2);
 		int x_graph = (this.getWidth() - (graph_width*scale_graph))/2;
@@ -51,6 +51,7 @@ public class Visuals extends JFrame implements Runnable{
 	
 	@Override
 	public void paint(Graphics g) {
+		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 		drawStatics(g);
 	}
 	
