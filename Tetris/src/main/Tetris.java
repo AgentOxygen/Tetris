@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Random;
-
 public class Tetris implements Runnable{
 	
 	/**Creates BlockManager to be read for updating the visuals and game*/
