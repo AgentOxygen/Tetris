@@ -15,6 +15,8 @@ public class Tetris implements Runnable{
 	public boolean update = true;
 	/**Sets rate, in updates per second, of update loop*/
 	public double rate = 30;
+	/**Creates visuals for game.*/
+	public Visuals vis;
 	
 	/**Creates game instance with grid size set by provided width and height variables. Use .run() to start update loop.*/
 	public Tetris(int width, int height) {
@@ -23,7 +25,8 @@ public class Tetris implements Runnable{
 			for(int h = 0; h < height; h++) {
 				grid[w][h] = "Empty";
 			}
-		}	
+		}
+		vis = new Visuals(30.0);
 	}
 	
 	/**Called during each update.*/
