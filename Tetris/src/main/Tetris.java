@@ -2,11 +2,11 @@ package main;
 
 public class Tetris implements Runnable{
 	
-	/**Creates grid to be read for updating the graphics.
-	 * 'Empty' draws a blank square
-	 * 'fill_black' draws a black-filled square
+	/**Creates grid to be read for updating the visuals.
+	 * 0 draws a blank square
+	 * 1 draws a black-filled square
 	 * */
-	public String[][] grid;
+	public int[][] grid;
 	/**Dictates width of grid*/
 	public int width;
 	/**Dictates height of grid*/
@@ -20,13 +20,14 @@ public class Tetris implements Runnable{
 	
 	/**Creates game instance with grid size set by provided width and height variables. Use .run() to start update loop.*/
 	public Tetris(int width, int height) {
-		grid = new String[width][height];
+		grid = new int[width][height];
 		for(int w = 0; w < width; w++) {
 			for(int h = 0; h < height; h++) {
-				grid[w][h] = "Empty";
+				grid[w][h] = 0;
 			}
 		}
-		vis = new Visuals(30.0);
+		vis = new Visuals(30.0, width, height);
+		vis.run();
 	}
 	
 	/**Called during each update.*/
@@ -35,7 +36,6 @@ public class Tetris implements Runnable{
 	}
 	
 	private void loop() {
-		
 		double delay1 = 1000/rate;
 		long standard_delay = Math.round(delay1);
 		long delta = System.currentTimeMillis();

@@ -15,12 +15,18 @@ public class Visuals extends JFrame implements Runnable{
 	private double rate;
 	/**Array used for checking position of blocks.*/
 	public int[][] graph;
+	private int graph_width;
+	private int graph_height;
 	
 	/**Provide refresh rate (redraws per second)*/
-	public Visuals(double refresh_rate) {
+	public Visuals(double refresh_rate, int grid_width, int grid_height) {
 		rate = refresh_rate;
+		graph_width = grid_width;
+		graph_height = grid_height;
+		graph = new int[grid_width][grid_height];
 		this.setSize(new Dimension(300, 450));
 		this.setTitle("Tetris");
+		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setEnabled(true);
 		this.setVisible(true);
@@ -28,7 +34,15 @@ public class Visuals extends JFrame implements Runnable{
 	
 	/**Draws designs, outlines, and things that don't move or change.*/
 	private void drawStatics(Graphics g) {
+		int x_graph = 10;
+		int y_graph = 50;
+		int scale_graph = this.getWidth()/graph.length - 1;
 		
+		for(int w = 0; w < graph_width; w++) {
+			for(int h = 0; h < graph_height; h++) {
+				g.drawRect(w*scale_graph + x_graph, h*scale_graph + y_graph, scale_graph, scale_graph);
+			}
+		}
 	}
 	
 	@Override
