@@ -1,7 +1,11 @@
 package main;
 
 import java.util.Random;
-
+/**
+ * Handles generation of blocks using a chance-based algorithm.
+ * Since the generation of blocks is somewhat complex, I decided to keep it separate from the block manager
+ * to improve development over github.
+ * */
 public class Block {
 	
 	private int min_dimension;
@@ -35,6 +39,9 @@ public class Block {
 		 * 					The number of touching cells is equal to one less than the total number
 		 * 					of filled cells. Each individual cell is has four faces.
 		 */
+		
+		Random rand = new Random();
+		
 	}
 	
 	public int getDimension() {
