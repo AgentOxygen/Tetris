@@ -46,9 +46,9 @@ public class Visuals extends JFrame implements Runnable{
 		for(int w = 0; w < graph_width; w++) {
 			for(int h = 0; h < graph_height; h++) {
 				if(graph[w][h] == 0) {
-					g.drawRect(w*scale_graph + x_graph, h*scale_graph + y_graph, scale_graph, scale_graph);
+					g.drawRect((graph.length - w - 1)*scale_graph + x_graph, (graph[0].length - h)*scale_graph + y_graph, scale_graph, scale_graph);
 				}else {
-					g.fillRect(w*scale_graph + x_graph, h*scale_graph + y_graph, scale_graph, scale_graph);
+					g.fillRect((graph.length - w - 1)*scale_graph + x_graph, (graph[0].length - h)*scale_graph + y_graph, scale_graph, scale_graph);
 				}
 			}
 		}
