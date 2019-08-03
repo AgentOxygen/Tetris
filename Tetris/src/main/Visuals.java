@@ -28,6 +28,8 @@ public class Visuals extends JFrame implements Runnable{
 	private int graph_height;
 	
 	private JPanel panel = new JPanel() {;
+		private static final long serialVersionUID = -1218536342922173362L;
+
 	@Override
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
