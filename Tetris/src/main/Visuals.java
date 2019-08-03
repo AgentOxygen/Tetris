@@ -1,10 +1,12 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Handles all graphical stuff. Creates its own thread for processing, therefore it should be created
@@ -16,11 +18,22 @@ public class Visuals extends JFrame implements Runnable{
 	/**Regulates visuals loop*/
 	private final AtomicBoolean update = new AtomicBoolean(false);
 	
+	/**Controls whether or not to display ID numbers of each block*/
+	public boolean show_numbers = true;
+	
 	private double rate;
 	/**Array used for checking position of blocks.*/
 	public int[][] graph;
 	private int graph_width;
 	private int graph_height;
+	
+	private JPanel panel = new JPanel() {;
+	@Override
+	public void paint(Graphics g) {
+		g.clearRect(0, 0, this.getWidth(), this.getHeight());
+		drawStatics(g);
+	}
+	};
 	
 	/**Provide refresh rate (redraws per second)*/
 	public Visuals(double refresh_rate, int grid_width, int grid_height) {
@@ -29,6 +42,8 @@ public class Visuals extends JFrame implements Runnable{
 		graph_height = grid_height;
 		graph = new int[grid_width][grid_height];
 		update.set(true);
+		
+		this.setContentPane(panel);
 		this.setSize(new Dimension(300, 600));
 		this.setTitle("Tetris");
 		this.setResizable(false);
@@ -45,19 +60,20 @@ public class Visuals extends JFrame implements Runnable{
 		
 		for(int w = 0; w < graph_width; w++) {
 			for(int h = 0; h < graph_height; h++) {
+				g.setColor(Color.black);
 				if(graph[w][h] == 0) {
 					g.drawRect((graph.length - w - 1)*scale_graph + x_graph, (graph[0].length - h)*scale_graph + y_graph, scale_graph, scale_graph);
 				}else {
 					g.fillRect((graph.length - w - 1)*scale_graph + x_graph, (graph[0].length - h)*scale_graph + y_graph, scale_graph, scale_graph);
+					//Writes ID numbers to cells
+					if(show_numbers) {
+						g.setColor(Color.red);
+						g.drawString(Integer.toString(graph[w][h]), (graph.length - w - 1)*scale_graph + x_graph + scale_graph/2
+								, (graph[0].length - h)*scale_graph + y_graph + scale_graph/2);
+					}
 				}
 			}
 		}
-	}
-	
-	@Override
-	public void paint(Graphics g) {
-		g.clearRect(0, 0, this.getWidth(), this.getHeight());
-		drawStatics(g);
 	}
 	
 	private void update() {
