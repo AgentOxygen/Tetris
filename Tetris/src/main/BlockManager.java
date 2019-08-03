@@ -22,6 +22,7 @@ public class BlockManager {
 	public BlockManager(int width, int height) {
 		grid = new int[width][height];
 		pregrid = new int[width][height];
+		clearPreGrid();
 	}
 	
 	/**Returns width of grid.*/
@@ -58,7 +59,14 @@ public class BlockManager {
 		}
 	}
 	
-	private double time_switch = -1;
+	/**Sets value of every cell within the pre-grid equal to '0'*/
+	public void clearPreGrid() {
+		for(int i = 0; i < pregrid.length; i++) {
+			for(int z = 0; z < pregrid[i].length; z++) {
+				pregrid[i][z] = 0;
+			}
+		}
+	}
 	
 	/**Shifts blocks down from pre-grid into grid and moves all blocks in grid down one unit.
 	 * If a block collides with either the first layer or another block, then it stops and
@@ -87,7 +95,7 @@ public class BlockManager {
 									merge.add(i);
 								}
 							}catch(IndexOutOfBoundsException e){
-								
+								System.out.println(e.getLocalizedMessage());
 							}
 						}
 					}else {
@@ -99,16 +107,28 @@ public class BlockManager {
 		}
 		
 		//Adds low-y position cells in pre-grid into top of grid, and shifts entire pre-grid down one.
-		
+		for(int x = 0; x < pregrid.length; x++) {
+			n_grid[x][n_grid[0].length - 1] = pregrid[x][0];
+		}
 		
 		grid = n_grid;
 	}
+	
+	private double time_switch = -1;
+	private double time_switch2 = -3;
 	
 	/**Should be called during each update cycle. Updates block manager's grid.*/
 	public void update() {
 		//Randomly selects cells to fill every 1 second, just a proof of concept
 		if(Tetris.game_time - time_switch > 1) {
 			descendGrid();
+			time_switch = Tetris.game_time;
+		}
+		//Generates a new block every 3 seconds
+		if(Tetris.game_time - time_switch2 > 3) {
+			generateBlock(1, 1);
+			System.out.println("Generated block.");
+			time_switch2 = Tetris.game_time;
 		}
 	}
 	
@@ -155,7 +175,7 @@ public class BlockManager {
 		//Adjust x position relative to left (x = 0) by random.
 		margin = r.nextInt(margin);
 		
-		//Adds generated block to pregrid.
+		//Adds generated block to pre-grid.
 		for(int x = 0; x < min_dimension; x++) {
 			for(int y = 0; y < min_dimension; y++) {
 				pregrid[margin + x][y] = block[x][y];
