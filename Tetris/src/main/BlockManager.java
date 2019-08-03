@@ -91,6 +91,7 @@ public class BlockManager {
 							try {
 								if(grid[x][y-1] == 0) {
 									n_grid[x][y-1] = i;
+									grid[x][y] = 0;
 								}else if(grid[x][y-1] == 1) {
 									merge.add(i);
 								}
