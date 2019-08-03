@@ -58,7 +58,7 @@ public class Visuals extends JFrame implements Runnable{
 	private void drawStatics(Graphics g) {
 		int scale_graph = this.getWidth()/(graph_width + 2);
 		int x_graph = (this.getWidth() - (graph_width*scale_graph))/2;
-		int y_graph = 50;
+		int y_graph = 15;
 		
 		for(int w = 0; w < graph_width; w++) {
 			for(int h = 0; h < graph_height; h++) {
@@ -70,8 +70,8 @@ public class Visuals extends JFrame implements Runnable{
 					//Writes ID numbers to cells
 					if(show_numbers) {
 						g.setColor(Color.red);
-						g.drawString(Integer.toString(graph[w][h]), (graph.length - w - 1)*scale_graph + x_graph + scale_graph/2
-								, (graph[0].length - h)*scale_graph + y_graph + scale_graph/2);
+						g.drawString(Integer.toString(graph[w][h]), (graph.length - w - 1)*scale_graph + x_graph + scale_graph/2, 
+								(graph[0].length - h)*scale_graph + y_graph + scale_graph/2);
 					}
 				}
 			}
