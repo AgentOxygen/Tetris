@@ -106,9 +106,18 @@ public class BlockManager {
 			}
 		}
 		
-		//Adds low-y position cells in pre-grid into top of grid, and shifts entire pre-grid down one.
+		//Adds low-y position cells in pre-grid into top of grid
 		for(int x = 0; x < pregrid.length; x++) {
 			n_grid[x][n_grid[0].length - 1] = pregrid[x][0];
+			pregrid[x][0] = 0;
+		}
+		
+		//Shifts pre-grid blocks down
+		int[][] np_grid = pregrid;
+		for(int x = 0; x < pregrid.length; x++) {
+			for(int y = 1; y < pregrid[0].length; y++) {
+				pregrid[x][y] = np_grid[x][y - 1];
+			}
 		}
 		
 		grid = n_grid;
