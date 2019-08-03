@@ -17,7 +17,7 @@ public class BlockManager {
 	private int[][] pregrid;
 	
 	/**Keeps track of highest possible ID for blocks*/
-	public int highest_id = 1;
+	public int highest_id = 2;
 	
 	public BlockManager(int width, int height) {
 		grid = new int[width][height];
