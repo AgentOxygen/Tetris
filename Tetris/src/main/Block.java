@@ -4,7 +4,7 @@ import java.util.Random;
 /**
  * Handles generation of blocks using a chance-based algorithm.
  * Since the generation of blocks is somewhat complex, I decided to keep it separate from the block manager
- * to improve development over github.
+ * to improve development over git-hub.
  * */
 public class Block {
 	
