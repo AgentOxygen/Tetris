@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,7 +9,7 @@ import java.util.Random;
  * Manages  blocks and their position within the grid (blocks are clusters filled cells).
  * Contains methods that read and update grid.
  * */
-public class BlockManager {
+public class BlockManager implements KeyListener{
 	
 	/**Grid is coded using '0' as empty and anything greater than 0 as filled.
 	 * Positive numbers group units together into blocks.
@@ -15,6 +17,9 @@ public class BlockManager {
 	private int[][] grid;
 	/**Grid stored above the visible grid, where blocks are added and descend.*/
 	private int[][] pregrid;
+	/**Stores of if previous block landed and next block is needed.*/
+	private boolean next_block = true;
+	int y_count; //This variable follows block y position correctly.
 	
 	/**Keeps track of highest possible ID for blocks*/
 	public int highest_id = 2;
@@ -22,6 +27,7 @@ public class BlockManager {
 	public BlockManager(int width, int height) {
 		grid = new int[width][height];
 		pregrid = new int[width][height];
+		y_count = height;
 		clearPreGrid();
 	}
 	
@@ -89,11 +95,19 @@ public class BlockManager {
 						if(grid[x][y] == i) {
 							//Check cell below it, determine if free or non-existent or filled.
 							try {
-								if(grid[x][y-1] == 0) {
-									n_grid[x][y-1] = i;
-									grid[x][y] = 0;
-								}else if(grid[x][y-1] == 1) {
+								// This if checks open space beneath block, and moves it down if needed.
+								if((y_count>1) ) {
+									if((grid[x][y-1] == 0) ) {
+										System.out.println(y_count);
+										n_grid[x][y-1] = i;
+										grid[x][y] = 0;
+										y_count--;
+										System.out.println("Im falling!");
+									}
+								}else {
+									next_block = true;
 									merge.add(i);
+									System.out.println("Landed.");
 								}
 							}catch(IndexOutOfBoundsException e){
 								System.out.println(e.getLocalizedMessage());
@@ -134,10 +148,10 @@ public class BlockManager {
 			descendGrid();
 			time_switch = Tetris.game_time;
 		}
-		//Generates a new block every 3 seconds
-		if(Tetris.game_time - time_switch2 > 3) {
+		//Generates a new block every 3 seconds and current block has landed
+		if(Tetris.game_time - time_switch2 > 3 && next_block == true) {
 			generateBlock(1, 1);
-			System.out.println("Generated block.");
+			next_block = false;
 			time_switch2 = Tetris.game_time;
 		}
 	}
@@ -165,5 +179,24 @@ public class BlockManager {
 				pregrid[margin + x][y] = block.getBlock()[x][y];				
 			}
 		}
+		System.out.println("Generated block.");
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
