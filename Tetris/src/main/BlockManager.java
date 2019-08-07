@@ -98,16 +98,16 @@ public class BlockManager implements KeyListener{
 								// This if checks open space beneath block, and moves it down if needed.
 								if((y_count>1) ) {
 									if((grid[x][y-1] == 0) ) {
-										System.out.println(y_count);
 										n_grid[x][y-1] = i;
 										grid[x][y] = 0;
 										y_count--;
-										System.out.println("Im falling!");
+										//Falling
 									}
 								}else {
 									next_block = true;
+									y_count = this.getHeight();
 									merge.add(i);
-									System.out.println("Landed.");
+									//Landed
 								}
 							}catch(IndexOutOfBoundsException e){
 								System.out.println(e.getLocalizedMessage());
