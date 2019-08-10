@@ -163,7 +163,7 @@ public class BlockManager implements KeyListener{
 		highest_id++;
 		
 		//Creates block
-		Block block = new Block(n, scale, id, grid);
+		Block block = new Block();
 		
 		//Adjust x position relative to left (x = 0) by random.
 		Random r = new Random();
