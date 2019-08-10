@@ -26,6 +26,8 @@ public class Visuals extends JFrame implements Runnable{
 	public int[][] graph;
 	private int graph_width;
 	private int graph_height;
+	/**Indicates that window is for debugging purposes.*/
+	public boolean debugger = false;
 	
 	private JPanel panel = new JPanel() {;
 		private static final long serialVersionUID = -1218536342922173362L;
@@ -44,7 +46,6 @@ public class Visuals extends JFrame implements Runnable{
 		graph_height = grid_height;
 		graph = new int[grid_width][grid_height];
 		update.set(true);
-		
 		this.setContentPane(panel);
 		this.setSize(new Dimension(300, 600));
 		this.setTitle("Tetris");
@@ -113,6 +114,10 @@ public class Visuals extends JFrame implements Runnable{
 	
 	@Override
 	public void run() {
+		if(debugger) {
+			this.setLocation(400, 0);
+			this.setTitle("Debugging");
+		}
 		loop();
 	}
 }
