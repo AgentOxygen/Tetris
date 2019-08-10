@@ -33,7 +33,7 @@ public class Tetris implements Runnable{
 		vis = new Visuals(30.0, width, height);
 		game = new Thread(this);
 		if(debugger) {
-			debug = new Visuals(10, width, height);
+			debug = new Visuals(1, width, height);
 			debug.debugger = true;
 		}
 		game.start();
