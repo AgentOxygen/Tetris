@@ -47,6 +47,10 @@ public class Tetris implements Runnable{
 		
 		//Update visuals
 		vis.graph = bm.getGrid();
+		
+		if(debugger) {
+			debug.graph = bm.getPreGrid();
+		}
 	}
 	
 	private void loop() {
