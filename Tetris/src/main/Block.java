@@ -12,8 +12,16 @@ public class Block {
 	private int min_dimension;
 	private int[][] block;
 	
+	@Deprecated
+	/**Creates block by random generation.*/
 	public Block(int n, int scale, int id, int grid[][]) {
 		buildBlock(n, scale, id, grid);
+	}
+	
+	/**Creates block by randomly selecting from the block templates.*/
+	public Block() {
+		block = BlockTemplates.randomlyGetTemplate();
+		min_dimension = block.length;
 	}
 	
 	@Deprecated
