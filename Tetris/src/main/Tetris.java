@@ -12,13 +12,19 @@ public class Tetris implements Runnable{
 	public double rate = 30;
 	/**Creates visuals for game.*/
 	public Visuals vis;
-	/*Used for timing in seconds**/
+	/**Used for timing in seconds*/
 	public static double game_time = 0.0;
+	/**Used for debugging.*/
+	public Visuals debug;
+	/**Determines whether or not to display debugging window.*/
+	private final boolean debugger = true;
 	
 	/**Creates thread for graphics processing.*/
 	public Thread visuals;
 	/**Creates thread for game core.*/
 	public Thread game;
+	/**Creates thread for debug window.*/
+	public Thread debug_window;
 	
 	/**Creates game instance with grid size set by provided width and height variables. Use .run() to start update loop.*/
 	public Tetris(int width, int height) {
@@ -26,6 +32,10 @@ public class Tetris implements Runnable{
 		bm = new BlockManager(width, height);
 		vis = new Visuals(30.0, width, height);
 		game = new Thread(this);
+		if(debugger) {
+			debug = new Visuals(10, width, height);
+			debug.debugger = true;
+		}
 		game.start();
 	}
 	
@@ -75,6 +85,10 @@ public class Tetris implements Runnable{
 	public void run() {
 		visuals = new Thread(vis);
 		visuals.start();
+		if(debugger) {
+			debug_window = new Thread(debug);
+			debug_window.start();
+		}
 		loop();
 	}
 }
