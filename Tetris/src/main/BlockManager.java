@@ -182,6 +182,10 @@ public class BlockManager implements KeyListener{
 		System.out.println("Generated block.");
 	}
 
+	public int[][] getPreGrid(){
+		return pregrid;
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
